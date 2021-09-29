@@ -5,7 +5,7 @@
 {% block extra-style %}
 <style>
 .thumbnail {
-    border: 3px solid ccc;
+    border: 3px solid #ccc;
 }
 </style>
 <% endblock %}
@@ -20,7 +20,7 @@
         <span class="font-italic h5">{{ item.description }}</span>
     </div>
 
-    <hr style="margin: 0 020 px 0;">
+    <hr style="margin: 0 0 20 px 0;">
 
     <div class="row">
         {% for photo in item.photo_set.all|slice:":5" %}
