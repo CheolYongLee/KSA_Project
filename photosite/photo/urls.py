@@ -1,17 +1,20 @@
 from django.urls import path
 from photo import views
+from django.views.generic import ListView, DetailView
+
+from photo.models import Album, Photo
 
 app_name = 'photo'
 urlpatterns = [
     # Example: /photo/
-    path('', views.AlbumLV.as_view(), name='index'),
+    path('', ListView.as_view(model=Album), name='index'),
 
     # Example: /photo/album/, same as /photo/
-    path('album', views.AlbumLV.as_view(), name='album_list'),
+    path('', ListView.as_view(model=Album), name='album_list'),
 
     # Example:
-    path('album/<int:pk>/', views.AlbumDV.as_view(), name='album_detail'),
+    path('album/<int:pk>/', DetailView.as_view(model=Album), name='album_detail'),
 
     # Example:
-    path('photo/<int:pk>/', views.AlbumDV.as_view(), name='photo_detail'),
+    path('photo/<int:pk>/', DetailView.as_view(model=Photo), name='photo_detail'),
 ]
