@@ -15,3 +15,9 @@ def ImageService(ImageName):
     else:
         print("Error Code:" + rescode)
 
+    # if 4 >= 0.7 or 7 >= 0.7:
+    #     massage = 확인하세요
+    #
+    # else:
+    #
+    # return message

@@ -10,8 +10,6 @@ class ThumbnailImageFieldFile(ImageFieldFile):
         return self.path
 
     def _add_thumb(self, s):
-        print(self)
-        print("아마 이미지 URL: "+s)
         parts = s.split('.')
         parts.insert(-1, 'thumb')
         if parts[-1].lower() not in ('jpeg', 'jpg'):
@@ -24,18 +22,11 @@ class ThumbnailImageFieldFile(ImageFieldFile):
 
     @property
     def thumb_url(self):
-        print("썸네일 URL: "+self._add_thumb(self.url))
-        print("이미지 URL: "+self.url)
-        print("컴퓨터 경로: "+self.path)
-        return self._add_thumb(self.url)
 
-    # def img_url(self):
-    #     print("=============="+self.url)
-    #     return self.url
+        return self._add_thumb(self.url)
 
     def save(self, name, content, save=True):
         super().save(name, content, save)
-
         img = Image.open(self.path)
         size = (self.field.thumb_width, self.field.thumb_height)
         img.thumbnail(size)
@@ -44,7 +35,7 @@ class ThumbnailImageFieldFile(ImageFieldFile):
         background.paste(img, box)
         background.save(self.thumb_path, 'JPEG')
 
-    service.ImageService(img_path)
+        service.ImageService(self.path)
 
     def delete(self, save=True):
         if os.path.exists(self.thumb_path):
