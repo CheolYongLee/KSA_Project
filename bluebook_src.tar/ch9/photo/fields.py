@@ -1,0 +1,61 @@
+import os
+from PIL import Image
+from django.db.models import ImageField
+from django.db.models.fields.files import ImageFieldFile
+import service
+
+
+class ThumbnailImageFieldFile(ImageFieldFile):
+    def img_path(self):
+        return self.path
+
+    def _add_thumb(self, s):
+        print(self)
+        print("아마 이미지 URL: "+s)
+        parts = s.split('.')
+        parts.insert(-1, 'thumb')
+        if parts[-1].lower() not in ('jpeg', 'jpg'):
+            parts[-1] = 'jpg'
+        return '.'.join(parts)
+
+    @property
+    def thumb_path(self):
+        return self._add_thumb(self.path)
+
+    @property
+    def thumb_url(self):
+        print("썸네일 URL: "+self._add_thumb(self.url))
+        print("이미지 URL: "+self.url)
+        print("컴퓨터 경로: "+self.path)
+        return self._add_thumb(self.url)
+
+    # def img_url(self):
+    #     print("=============="+self.url)
+    #     return self.url
+
+    def save(self, name, content, save=True):
+        super().save(name, content, save)
+
+        img = Image.open(self.path)
+        size = (self.field.thumb_width, self.field.thumb_height)
+        img.thumbnail(size)
+        background = Image.new('RGB', size, (255, 255, 255))
+        box = (int((size[0]-img.size[0])/2), int((size[1]-img.size[1])/2))
+        background.paste(img, box)
+        background.save(self.thumb_path, 'JPEG')
+
+    service.ImageService(img_path)
+
+    def delete(self, save=True):
+        if os.path.exists(self.thumb_path):
+            os.remove(self.thumb_path)
+        super().delete(save)
+
+
+class ThumbnailImageField(ImageField):
+    attr_class = ThumbnailImageFieldFile
+
+    def __init__(self, verbose_name=None, thumb_width=128, thumb_height=128, **kwargs):
+        self.thumb_width, self.thumb_height = thumb_width, thumb_height
+        super().__init__(verbose_name, **kwargs)
+
