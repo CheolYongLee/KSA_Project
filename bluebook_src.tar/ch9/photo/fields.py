@@ -26,6 +26,7 @@ class ThumbnailImageFieldFile(ImageFieldFile):
         return self._add_thumb(self.url)
 
     def save(self, name, content, save=True):
+        print(self.url)
         super().save(name, content, save)
         img = Image.open(self.path)
         size = (self.field.thumb_width, self.field.thumb_height)
@@ -35,7 +36,9 @@ class ThumbnailImageFieldFile(ImageFieldFile):
         background.paste(img, box)
         background.save(self.thumb_path, 'JPEG')
 
-        service.ImageService(self.path)
+        result = service.ImageService(self.path)
+
+        return str(result)
 
     def delete(self, save=True):
         if os.path.exists(self.thumb_path):
@@ -45,8 +48,10 @@ class ThumbnailImageFieldFile(ImageFieldFile):
 
 class ThumbnailImageField(ImageField):
     attr_class = ThumbnailImageFieldFile
-
     def __init__(self, verbose_name=None, thumb_width=128, thumb_height=128, **kwargs):
         self.thumb_width, self.thumb_height = thumb_width, thumb_height
         super().__init__(verbose_name, **kwargs)
+
+    def zero_to_all(self) :
+        return 0
 

@@ -4,6 +4,7 @@ from django.urls import reverse
 from taggit.managers import TaggableManager
 
 
+
 class Post(models.Model):
     title = models.CharField(verbose_name='TITLE', max_length=50)
     slug = models.SlugField('SLUG', unique=True, allow_unicode=True, help_text='one word for title alias.')

@@ -23,6 +23,8 @@
                 <p class="font-italic">
                        <a href="{% url 'photo:album_detail' object.album.id %}"> {{ object.album.name }}</a>
                 </p>
+            <li class="h5">지문정보 유무</li>
+                <p class="font-italic">{{ object.result }}</p>
         </ul>
     </div>
 
