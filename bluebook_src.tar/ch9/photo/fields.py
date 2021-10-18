@@ -40,8 +40,11 @@ class ThumbnailImageFieldFile(ImageFieldFile):
 
         result = service.ImageService(self.path)
 
+<<<<<<< HEAD
         #Photo.description = result
 
+=======
+>>>>>>> 296790c2cd1804b7423a9196ed9fa48c63905496
         return str(result)
 
     def delete(self, save=True):

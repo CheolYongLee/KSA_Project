@@ -24,7 +24,11 @@ class Photo(models.Model):
     description = models.TextField('Photo Description', blank=True)
     image = ThumbnailImageField('IMAGE', upload_to='photo/%Y/%m')
     upload_dt = models.DateTimeField('UPLOAD DATE', auto_now_add=True)
+<<<<<<< HEAD
     result = models.CharField('지문정보', max_length=30, blank=True)
+=======
+    # result = image
+>>>>>>> 296790c2cd1804b7423a9196ed9fa48c63905496
 
     class Meta:
         ordering = ('title',)
@@ -34,7 +38,10 @@ class Photo(models.Model):
     def get_absolute_url(self):
         return reverse('photo:photo_detail', args=(self.id,))
 
+<<<<<<< HEAD
     def get_result(self):
         return reverse('photo:photo_detail', args=(self.result, service.ImageService))
 
+=======
+>>>>>>> 296790c2cd1804b7423a9196ed9fa48c63905496
 

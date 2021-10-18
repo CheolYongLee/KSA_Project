@@ -16,6 +16,7 @@ def ImageService(ImageName):
         print(response.text)  # 손가락이 인식되었습니다.
         if json_data.get('predictions')[0].get('4').get('score') >= 0.7 or json_data.get('predictions')[0].get('7').get('score') >= 0.7 or json_data.get('predictions')[1].get('4').get('score') >= 0.7 or json_data.get('predictions')[1].get('7').get('score') >= 0.7:
             result = "지문 정보 유출에 주의하세요."
+<<<<<<< HEAD
             print("False Alarm")
         else:
             result = "지문 정보가 없습니다."
@@ -23,4 +24,11 @@ def ImageService(ImageName):
         print(response.text)
         print("Error Code:" + str(rescode))
         result = "빈 값입니다."
+=======
+        else:
+            result = "지문 정보가 없습니다."
+    else:
+        print("Error Code:" + rescode)
+        result = ""
+>>>>>>> 296790c2cd1804b7423a9196ed9fa48c63905496
     return result
