@@ -1,8 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
-from photo.fields import ThumbnailImageField
-
+from photo.fields import ThumbnailImageField, ThumbnailImageFieldFile
+import service
 
 class Album(models.Model):
     name = models.CharField('NAME', max_length=30)
@@ -24,13 +24,17 @@ class Photo(models.Model):
     description = models.TextField('Photo Description', blank=True)
     image = ThumbnailImageField('IMAGE', upload_to='photo/%Y/%m')
     upload_dt = models.DateTimeField('UPLOAD DATE', auto_now_add=True)
+    result = models.CharField('지문정보', max_length=30, blank=True)
 
     class Meta:
         ordering = ('title',)
 
     def __str__(self):
         return self.title
-
     def get_absolute_url(self):
         return reverse('photo:photo_detail', args=(self.id,))
+
+    def get_result(self):
+        return reverse('photo:photo_detail', args=(self.result, service.ImageService))
+
 
